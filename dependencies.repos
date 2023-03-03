@@ -1,0 +1,7 @@
+---
+repositories:
+  qualisys_cpp_sdk:
+    type: git
+    url: https://github.com/jgoppert/qualisys_cpp_sdk
+    version: install_fix
+
