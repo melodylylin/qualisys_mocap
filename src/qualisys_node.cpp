@@ -11,6 +11,9 @@
 #include "qualisys_cpp_sdk/RTPacket.h"
 #include "qualisys_cpp_sdk/Network.h"
 
+#include <tf2/LinearMath/Matrix3x3.h>
+#include <tf2/LinearMath/Quaternion.h>
+
 using namespace std::chrono_literals;
 
 
@@ -113,6 +116,15 @@ class QualisysNode : public rclcpp::Node
                             if (pub_pose_.find(pTmpStr) == pub_pose_.end()) {
                               pub_pose_[pTmpStr] = this->create_publisher<geometry_msgs::msg::PoseStamped>(pTmpStr, 10);
                             }
+
+			    // convert to quaternion
+			    tf2::Matrix3x3 R(
+				rotationMatrix[0],rotationMatrix[3],rotationMatrix[6],
+			        rotationMatrix[1],rotationMatrix[4],rotationMatrix[7],
+			        rotationMatrix[2],rotationMatrix[5],rotationMatrix[8]);
+			    tf2::Quaternion q;
+			    R.getRotation(q);
+
                             // publish body
                             geometry_msgs::msg::PoseStamped msg;
 			    msg.header.stamp = rclcpp::Clock().now();
@@ -120,10 +132,10 @@ class QualisysNode : public rclcpp::Node
 			    msg.pose.position.x = fX;
 			    msg.pose.position.y = fY;
 			    msg.pose.position.z = fZ;
-			    msg.pose.orientation.x = 0;
-			    msg.pose.orientation.y = 0;
-			    msg.pose.orientation.z = 0;
-			    msg.pose.orientation.w = 1;
+			    msg.pose.orientation.x = q.x();
+			    msg.pose.orientation.y = q.y();
+			    msg.pose.orientation.z = q.z();
+			    msg.pose.orientation.w = q.w();
                             pub_pose_[pTmpStr]->publish(msg);
                           }
                       }

@@ -10,11 +10,12 @@ find_package(ament_cmake REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(qualisys_cpp_sdk REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(tf2 REQUIRED)
 
 add_executable(qualisys_node
   src/qualisys_node.cpp)
 
-ament_target_dependencies(qualisys_node rclcpp nav_msgs)
+ament_target_dependencies(qualisys_node rclcpp nav_msgs tf2)
 #target_include_directories(qualisys_node PRIVATE ${QUALISYS_CPP_SDK_INCLUDE_DIRS})
 target_link_libraries(qualisys_node qualisys_cpp_sdk)
 
