@@ -8,14 +8,16 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 find_package(qualisys_cpp_sdk REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 add_executable(qualisys_node
   src/qualisys_node.cpp)
 
-ament_target_dependencies(qualisys_node rclcpp nav_msgs tf2)
+ament_target_dependencies(qualisys_node rclcpp nav_msgs visualization_msgs tf2 tf2_ros)
 #target_include_directories(qualisys_node PRIVATE ${QUALISYS_CPP_SDK_INCLUDE_DIRS})
 target_link_libraries(qualisys_node qualisys_cpp_sdk)
 
