@@ -46,9 +46,9 @@ public:
     QualisysNode()
         : Node("qualisys_node")
     {
-        declare_parameter("server", "192.168.123.2");
-        get_parameter("server", serverAddr_);
-        // serverAddr_ = "100.117.200.199";
+        declare_parameter("mocap_server_ip", "192.168.123.2");
+        get_parameter("mocap_server_ip", serverAddr_);
+        RCLCPP_INFO(this->get_logger(),"Qualisys Mocap Server IP: %s", serverAddr_.c_str());
         tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
         run();
     }
